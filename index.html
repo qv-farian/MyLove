@@ -590,7 +590,7 @@
         ];
 
         const BG_COLOR_2D = "#060208";
-        const SIZES_2D = [13, 14, 15, 16, 17];
+        const SIZES_2D = [14, 15, 16, 17, 18];
         const FONT_FAMILY_2D = "Montserrat, sans-serif";
 
         const canvas2D = document.getElementById("heartCanvas");
@@ -617,7 +617,7 @@
 
             // Tối ưu tỉ lệ scale trái tim 2D gọn gàng, thoáng đãng
             const minDim = Math.min(width2D, height2D);
-            scale2D = (minDim / 800) * (isMobile ? 22.0 : 21.0);
+            scale2D = (minDim / 800) * (isMobile ? 22.0 : 22.0);
 
             if (placedPhrases2D.length > 0) {
                 initHeartLayout2D();
