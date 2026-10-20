@@ -230,7 +230,7 @@
     <div id="pageTransitionGlow"></div>
 
     <!-- Audio Element (Hỗ trợ phát liền mạch trên Mobile) -->
-    <audio id="bgMusic" src="audio.mp3" preload="auto" loop playsinline webkit-playsinline></audio>
+    <audio id="bgMusic" src="audio.mp3" preload="auto" autoplay loop playsinline webkit-playsinline></audio>
 
     <!-- FIXED TOP CONTROLS (Tối ưu giao diện điện thoại & máy tính) -->
     <header class="fixed top-3 sm:top-4 right-3 sm:right-5 z-40 flex items-center space-x-2 sm:space-x-3">
@@ -494,56 +494,76 @@
         let audioCtx = null;
         let gainNode = null;
         let isAudioPlaying = false;
+        let isAudioStarting = false;
 
-        async function initAudio() {
+        function prepareAudioGraph() {
+            if (audioCtx) return;
+
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioCtx.createMediaElementSource(bgMusic);
+            gainNode = audioCtx.createGain();
+            gainNode.gain.value = 1.0;
+            source.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+        }
+
+        function markAudioPlaying() {
+            isAudioPlaying = true;
+            musicVisualizer.classList.remove('music-paused');
+        }
+
+        function handleAudioFailure(err) {
+            console.warn("Autoplay audio was blocked by the browser.", err);
+            isAudioPlaying = false;
+            musicVisualizer.classList.add('music-paused');
+        }
+
+        function initAudio() {
+            if (isAudioPlaying || isAudioStarting) return;
+            isAudioStarting = true;
             try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    const source = audioCtx.createMediaElementSource(bgMusic);
-                    gainNode = audioCtx.createGain();
-                    gainNode.gain.value = 1.0;
-                    source.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                }
+                prepareAudioGraph();
+                const playPromise = bgMusic.play();
                 if (audioCtx.state === 'suspended') {
-                    await audioCtx.resume();
+                    audioCtx.resume().catch(handleAudioFailure);
                 }
-                await bgMusic.play();
-                isAudioPlaying = true;
-                musicVisualizer.classList.remove('music-paused');
+                playPromise
+                    .then(markAudioPlaying)
+                    .catch(handleAudioFailure)
+                    .finally(() => {
+                        isAudioStarting = false;
+                    });
             } catch (err) {
-                console.warn("Autoplay audio waiting for touch gesture.", err);
-                musicVisualizer.classList.add('music-paused');
-                isAudioPlaying = false;
+                handleAudioFailure(err);
+                isAudioStarting = false;
             }
         }
 
         function toggleAudio() {
-            if (!audioCtx) {
+            if (!audioCtx || bgMusic.paused) {
                 initAudio();
                 return;
             }
-            if (bgMusic.paused) {
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                bgMusic.play();
-                isAudioPlaying = true;
-                musicVisualizer.classList.remove('music-paused');
-            } else {
-                bgMusic.pause();
-                isAudioPlaying = false;
-                musicVisualizer.classList.add('music-paused');
-            }
+            bgMusic.pause();
+            isAudioPlaying = false;
+            musicVisualizer.classList.add('music-paused');
         }
 
         musicToggleBtn.addEventListener('click', toggleAudio);
+        // Tự động thử phát ngay khi tài nguyên audio sẵn sàng và khi trang đã load.
+        bgMusic.addEventListener('canplaythrough', initAudio, { once: true });
         window.addEventListener('load', initAudio, { once: true });
-        // Kích hoạt ngay khi chạm đầu tiên trên điện thoại
-        document.addEventListener('touchstart', () => {
-            if (!isAudioPlaying) initAudio();
-        }, { once: true });
-        document.addEventListener('pointerdown', () => {
-            if (!isAudioPlaying) initAudio();
-        }, { once: true });
+        // Nếu trình duyệt chặn autoplay, lần tương tác đầu tiên sẽ kích hoạt nhạc.
+        const resumeAudioAfterInteraction = () => {
+            if (!isAudioPlaying) {
+                initAudio();
+            } else {
+                document.removeEventListener('pointerdown', resumeAudioAfterInteraction);
+                document.removeEventListener('touchstart', resumeAudioAfterInteraction);
+            }
+        };
+        document.addEventListener('pointerdown', resumeAudioAfterInteraction);
+        document.addEventListener('touchstart', resumeAudioAfterInteraction);
 
 
         // --- 4. Nút Replay ---
@@ -597,7 +617,7 @@
 
             // Tối ưu tỉ lệ scale trái tim 2D gọn gàng, thoáng đãng
             const minDim = Math.min(width2D, height2D);
-            scale2D = (minDim / 800) * (isMobile ? 23.0 : 22.0);
+            scale2D = (minDim / 800) * (isMobile ? 22.0 : 21.0);
 
             if (placedPhrases2D.length > 0) {
                 initHeartLayout2D();
