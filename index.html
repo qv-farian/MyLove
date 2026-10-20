@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<!--Mở cái này lên chi bé, coi cái gì ở đây=))-->
-<html lang="vi">
+<!-- 🌸 20-10 Web: Mượt mà 100% trên Điện thoại & Máy tính - Hiệu ứng chuyển trang Cinematic 💖 -->
+<html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>20-10</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🌸 For Trâm Võ - Chúc Mừng 20/10 - Happy Vietnamese Women's Day 💖</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+
     <!-- Tailwind CSS for modern UI controls -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -18,24 +20,42 @@
             padding: 0;
             box-sizing: border-box;
             user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
         }
 
-        body, html {
+        html, body {
             width: 100%;
-            height: 100dvh;
+            height: 100%;
             overflow: hidden;
             background-color: #060208;
             font-family: 'Montserrat', sans-serif;
             color: #ffffff;
+            touch-action: pan-y;
         }
 
-        #canvas-container {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Container cuộn snap giữa 2 trang */
+        .snap-container {
             width: 100%;
             height: 100dvh;
-            z-index: 1;
+            overflow-y: auto;
+            scrollbar-width: none;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .snap-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .snap-section {
+            width: 100%;
+            height: 100dvh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            position: relative;
+            overflow: hidden;
         }
 
         canvas {
@@ -46,26 +66,30 @@
 
         /* Glassmorphism Controls Panel */
         .glass-panel {
-            background: rgba(18, 8, 22, 0.55);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 100, 150, 0.18);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            background: rgba(18, 8, 22, 0.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 100, 150, 0.28);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
         .btn-glow {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .btn-glow:hover {
-            box-shadow: 0 0 20px rgba(230, 30, 80, 0.6);
-            transform: translateY(-2px);
+        .btn-glow:active {
+            transform: scale(0.94);
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.85);
         }
 
-        .btn-glow:active {
-            transform: translateY(0);
+        @media (hover: hover) {
+            .btn-glow:hover {
+                box-shadow: 0 0 22px rgba(244, 63, 94, 0.75);
+                transform: translateY(-2px);
+                border-color: rgba(255, 120, 170, 0.65);
+            }
         }
 
         /* Custom Modal Styling */
@@ -81,7 +105,7 @@
 
         /* Glow Text Effect */
         .glow-title {
-            text-shadow: 0 0 10px #ff2a6d, 0 0 20px #ff2a6d, 0 0 40px #ff2a6d;
+            text-shadow: 0 0 12px #ff2a6d, 0 0 24px #ff2a6d, 0 0 45px #ff2a6d;
         }
 
         .font-handwriting {
@@ -95,124 +119,448 @@
             filter: blur(100px);
             pointer-events: none;
             z-index: 0;
-            opacity: 0.25;
+            opacity: 0.28;
             animation: pulseGlow 8s infinite alternate ease-in-out;
         }
 
         @keyframes pulseGlow {
             0% { transform: scale(1) translate(0, 0); opacity: 0.2; }
-            50% { transform: scale(1.2) translate(30px, -20px); opacity: 0.35; }
-            100% { transform: scale(0.9) translate(-20px, 20px); opacity: 0.2; }
+            50% { transform: scale(1.15) translate(20px, -15px); opacity: 0.35; }
+            100% { transform: scale(0.95) translate(-15px, 15px); opacity: 0.2; }
+        }
+
+        /* Music visualizer animation */
+        .music-bar {
+            display: inline-block;
+            width: 3px;
+            background: #f43f5e;
+            border-radius: 2px;
+            animation: bounce 1.2s ease-in-out infinite alternate;
+        }
+        .music-bar:nth-child(2) { animation-delay: 0.2s; height: 14px; }
+        .music-bar:nth-child(3) { animation-delay: 0.4s; height: 18px; }
+        .music-bar:nth-child(4) { animation-delay: 0.1s; height: 10px; }
+        @keyframes bounce {
+            0% { transform: scaleY(0.3); }
+            100% { transform: scaleY(1); }
+        }
+        .music-paused .music-bar {
+            animation-play-state: paused;
+            transform: scaleY(0.4);
+        }
+
+        /* Floating prompt bounce */
+        @keyframes bouncePrompt {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-7px); }
+            60% { transform: translateY(-3px); }
+        }
+        .animate-bounce-prompt {
+            animation: bouncePrompt 2.2s infinite;
+        }
+
+        /* Dot navigation indicator */
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .nav-dot.active {
+            background: #f43f5e;
+            box-shadow: 0 0 14px #f43f5e, 0 0 25px rgba(244, 63, 94, 0.6);
+            transform: scale(1.4);
+        }
+
+        /* Transition Glow Flash Effect */
+        #pageTransitionGlow {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 42, 109, 0.25) 0%, rgba(6, 2, 8, 0) 70%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 35;
+            transition: opacity 0.6s ease;
+        }
+        #pageTransitionGlow.flash {
+            opacity: 1;
+        }
+
+        #section1.is-returning #heartCanvas {
+            animation: heartReturn 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes heartReturn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92) translateY(18px);
+                filter: blur(8px);
+            }
+            55% {
+                opacity: 1;
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Cinematic Title Entrance */
+        .title-entrance {
+            animation: titleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes titleIn {
+            0% { opacity: 0; transform: translateY(16px) scale(0.97); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
     </style>
 </head>
-<body class="relative flex items-center justify-center">
+<body class="relative">
 
     <!-- Ambient Glowing Background Bubbles -->
-    <div class="ambient-light w-96 h-96 bg-pink-600 top-1/4 left-1/4"></div>
-    <div class="ambient-light w-96 h-96 bg-purple-800 bottom-1/4 right-1/4" style="animation-delay: -4s;"></div>
+    <div class="ambient-light w-80 md:w-96 h-80 md:h-96 bg-pink-600 top-1/4 left-1/4 fixed"></div>
+    <div class="ambient-light w-80 md:w-96 h-80 md:h-96 bg-purple-800 bottom-1/4 right-1/4 fixed" style="animation-delay: -4s;"></div>
+    <div class="ambient-light w-72 h-72 bg-rose-500 top-1/3 right-1/3 fixed" style="animation-delay: -2s; opacity: 0.18;"></div>
 
-    <!-- Main Graphic Canvas -->
-    <div id="canvas-container">
-        <canvas id="heartCanvas"></canvas>
-    </div>
+    <!-- Hiệu ứng ánh sáng chuyển cảnh mượt mà -->
+    <div id="pageTransitionGlow"></div>
 
-    <!-- UI Overlay Navigation & Action Controls -->
-    <div class="absolute top-5 right-5 z-20 flex items-center space-x-3">
+    <!-- Audio Element (Hỗ trợ phát liền mạch trên Mobile) -->
+    <audio id="bgMusic" src="audio.mp3" preload="auto" loop playsinline webkit-playsinline></audio>
 
+    <!-- FIXED TOP CONTROLS (Tối ưu giao diện điện thoại & máy tính) -->
+    <header class="fixed top-3 sm:top-4 right-3 sm:right-5 z-40 flex items-center space-x-2 sm:space-x-3">
         <!-- Replay Animation Button -->
-        <button id="replayBtn" class="glass-panel text-pink-300 hover:text-white p-3 rounded-full btn-glow flex items-center justify-center w-12 h-12 focus:outline-none" title="Chạy lại hiệu ứng">
-            <i class="fas fa-redo-alt text-lg"></i>
+        <button id="replayBtn" class="glass-panel text-pink-300 hover:text-white p-2.5 sm:p-2.5 rounded-full btn-glow flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 focus:outline-none" title="Chạy lại hoạt ảnh">
+            <i class="fas fa-redo-alt text-xs sm:text-base"></i>
+        </button>
+
+        <!-- Music Toggle Button -->
+        <button id="musicToggleBtn" class="glass-panel text-pink-300 hover:text-white px-3 py-2 sm:py-2.5 rounded-full btn-glow flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm focus:outline-none" title="Bật/Tắt nhạc">
+            <span id="musicVisualizer" class="flex items-center space-x-0.5 h-4 w-3.5 sm:w-4 justify-center">
+                <span class="music-bar h-2.5 sm:h-3"></span>
+                <span class="music-bar h-3.5 sm:h-4"></span>
+                <span class="music-bar h-2"></span>
+            </span>
+            <span id="musicStatusText" class="font-medium hidden xs:inline text-[11px] sm:text-xs">Nhạc</span>
         </button>
 
         <!-- View Letter Card Button -->
-        <audio id="clickSound" src="audio.mp3" preload="auto" autoplay></audio>
-
-        <button id="cardToggle" class="glass-panel text-pink-200 bg-pink-900/40 hover:bg-pink-800/60 px-5 py-3 rounded-full btn-glow flex items-center space-x-2 font-semibold text-sm border border-pink-500/30 focus:outline-none">
-            <i class="fas fa-envelope-open-text text-pink-400"></i>
-            <span>Gửi lời chúc đến em</span>
+        <button id="cardToggle" class="glass-panel text-pink-200 bg-pink-900/50 hover:bg-pink-800/70 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full btn-glow flex items-center space-x-1.5 sm:space-x-2 font-semibold text-xs sm:text-sm border border-pink-500/40 focus:outline-none">
+            <i class="fas fa-envelope-open-text text-pink-400 text-xs sm:text-sm"></i>
+            <span class="hidden sm:inline">Gửi lời chúc đến em</span>
+            <span class="sm:hidden text-xs">Mở thiệp</span>
         </button>
-    </div>
+    </header>
 
-    <!-- Bottom Romantic Title Banner -->
-    <div class="absolute bottom-6 z-10 text-center pointer-events-none px-4">
-        <h1 class="text-pink-300 font-handwriting text-3xl md:text-5xl font-bold tracking-wider mb-1 drop-shadow-md">
-            Happy Vietnamese Women's Day
-        </h1>
-        <p class="text-xs md:text-sm text-pink-200/60 tracking-widest uppercase">20 . 10 . 2026 • Always Be Happy & Beautiful</p>
-    </div>
+    <!-- FIXED SIDE NAV DOTS (Thanh chấm tròn chuyển trang mượt mà) -->
+    <nav class="fixed right-2.5 sm:right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col space-y-3.5 bg-black/30 backdrop-blur-md p-1.5 sm:p-2 rounded-full border border-pink-500/20">
+        <div id="dot1" class="nav-dot active" title="Trang 1: Trái tim lời chúc 2D"></div>
+        <div id="dot2" class="nav-dot" title="Trang 2: Không gian 3D hạt & vành chữ"></div>
+    </nav>
+
+    <!-- MAIN SNAP CONTAINER -->
+    <main id="mainContainer" class="snap-container">
+
+        <!-- ======================================================== -->
+        <!-- SECTION 1: TRANG ĐẦU (Trái tim ghép lời chúc 2D)           -->
+        <!-- ======================================================== -->
+        <section id="section1" class="snap-section flex flex-col items-center justify-between pb-4 sm:pb-6">
+            <!-- 2D Canvas Container -->
+            <div class="absolute inset-0 z-10 pointer-events-auto">
+                <canvas id="heartCanvas"></canvas>
+            </div>
+
+            <!-- Spacing đỉnh -->
+            <div class="w-full h-14 sm:h-16 z-20"></div>
+
+            <!-- Bottom Title Banner & Nút Lướt Xuống -->
+            <div class="z-20 text-center px-2 flex flex-col items-center w-full max-w-full pb-2">
+                <h1 class="text-pink-300 font-handwriting text-2xl sm:text-4xl md:text-5xl font-bold tracking-wide mb-0.5 drop-shadow-md glow-title title-entrance pointer-events-none whitespace-nowrap">
+                    Happy Vietnamese Women's Day
+                </h1>
+                <p class="text-[10px] sm:text-xs md:text-sm text-pink-200/80 tracking-widest uppercase mb-2.5 pointer-events-none whitespace-nowrap">
+                    20 . 10 . 2026 • Always Be Happy & Beautiful
+                </p>
+
+                <!-- Nút lướt xuống hiệu ứng 3D -->
+                <button id="scrollToSection2" class="glass-panel px-4 sm:px-5 py-2 rounded-full btn-glow flex items-center space-x-2 text-xs sm:text-sm text-pink-200 bg-pink-950/45 hover:bg-pink-900/70 border border-pink-500/40 shadow-xl animate-bounce-prompt cursor-pointer active:scale-95">
+                    <span class="font-medium">Khám phá không gian 3D</span>
+                    <i class="fas fa-chevron-down text-rose-400 text-xs"></i>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ======================================================== -->
+        <!-- SECTION 2: TRANG 3D (Trái tim 3D Hạt & Vòng chữ xoay)     -->
+        <!-- ======================================================== -->
+        <section id="section2" class="snap-section flex flex-col items-center justify-between pb-4 sm:pb-6">
+            <!-- 3D Three.js WebGL Container -->
+            <div id="webgl3d-container" class="absolute inset-0 z-10"></div>
+
+            <!-- Top Bar của Section 2: Nút cuộn lên trang đầu -->
+            <div class="z-20 pt-3 sm:pt-4 px-3 sm:px-5 flex items-center justify-start w-full">
+                <button id="scrollToSection1" class="glass-panel px-3.5 sm:px-4 py-2 rounded-full btn-glow flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm text-pink-200 bg-pink-950/45 hover:bg-pink-900/70 border border-pink-500/40 cursor-pointer active:scale-95">
+                    <i class="fas fa-chevron-up text-rose-400 text-xs"></i>
+                    <span class="font-medium">Trang đầu (2D Chữ)</span>
+                </button>
+            </div>
+
+            <!-- Bottom Info Banner của Section 2 -->
+            <div class="z-20 text-center px-2 pointer-events-none w-full max-w-full pb-3">
+                <h2 class="text-pink-300 font-handwriting text-2xl sm:text-4xl md:text-5xl font-bold tracking-wide mb-0.5 drop-shadow-md glow-title title-entrance whitespace-nowrap">
+                    Happy Vietnamese Women's Day
+                </h2>
+                <p class="text-[10px] sm:text-xs md:text-sm text-pink-200/80 tracking-widest uppercase mb-1 whitespace-nowrap">
+                    20 . 10 . 2026 • Always Be Happy & Beautiful
+                </p>
+                <p class="text-[10px] sm:text-[11px] text-pink-300/75 tracking-wider bg-black/35 px-3 py-0.5 rounded-full inline-block backdrop-blur-sm border border-pink-500/20 whitespace-nowrap">
+                    ✨ Vuốt hoặc kéo chuột để xoay 3D • Cuộn để chuyển trang
+                </p>
+            </div>
+        </section>
+
+    </main>
 
     <!-- Modal Card / Greeting Letter -->
-    <div id="greetingModal" class="fixed inset-0 z-30 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden transition-all duration-300">
-        <div class="glass-panel relative max-w-lg w-full p-8 rounded-3xl border border-pink-500/30 text-center transform transition-all shadow-2xl">
+    <div id="greetingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-md hidden transition-all duration-300">
+        <div class="glass-panel relative max-w-md sm:max-w-lg w-full p-6 sm:p-8 rounded-3xl border border-pink-500/30 text-center transform transition-all shadow-2xl">
             <!-- Close Button -->
-            <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white w-8 h-8 rounded-full flex items-center justify-center focus:outline-none">
-                <i class="fas fa-times text-xl"></i>
+            <button id="closeModal" class="absolute top-3.5 right-3.5 text-gray-400 hover:text-white w-8 h-8 rounded-full flex items-center justify-center focus:outline-none">
+                <i class="fas fa-times text-lg sm:text-xl"></i>
             </button>
 
             <!-- Card Header Icon -->
-            <div class="w-16 h-16 bg-gradient-to-tr from-pink-600 to-rose-400 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg shadow-pink-500/30">
-                <i class="fas fa-heart text-2xl text-white animate-pulse"></i>
+            <div class="w-14 sm:w-16 h-14 sm:h-16 bg-gradient-to-tr from-pink-600 to-rose-400 rounded-2xl mx-auto flex items-center justify-center mb-3 sm:mb-4 shadow-lg shadow-pink-500/30">
+                <i class="fas fa-heart text-xl sm:text-2xl text-white animate-pulse"></i>
             </div>
 
             <!-- Greeting Content -->
-            <h2 class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-300 to-red-400 mb-2">
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-300 to-red-400 mb-1.5">
                 Chúc Mừng Ngày 20/10
             </h2>
-            <div class="w-16 h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent mx-auto mb-6"></div>
+            <div class="w-14 h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent mx-auto mb-4 sm:mb-6"></div>
 
-            <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-6 font-light">
+            <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-4 sm:mb-6 font-light">
                 Gửi tới người phụ nữ của anh! Nhân ngày <strong class="text-pink-300 font-semibold">Phụ nữ Việt Nam 20/10</strong>, chúc em luôn ngập tràn niềm vui, tỏa sáng rực rỡ và nhận được thật nhiều yêu thương mỗi ngày. Chúc em gặp nhiều may mắn trong hành trình sắp tới.
             </p>
-            <p class="text-pink-200/90 font-handwriting text-2xl mb-8">
+            <p class="text-pink-200/90 font-handwriting text-xl sm:text-2xl mb-6 sm:mb-8">
                 "Mong em luôn bình an, hạnh phúc và luôn được là chính mình!"
             </p>
 
-            <button id="closeModalBtn" class="w-full py-3.5 bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold rounded-xl shadow-lg shadow-pink-600/30 btn-glow transition duration-200">
-                Vì thích nên mới nịnh đó❤️
+            <button id="closeModalBtn" class="w-full py-3 sm:py-3.5 bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold text-sm sm:text-base rounded-xl shadow-lg shadow-pink-600/30 btn-glow transition duration-200">
+                Vì thích nên mới nịnh đó ❤️
             </button>
         </div>
     </div>
 
-    <!-- MAIN ENGINE SCRIPT -->
-    <script>
-        const cardToggleBtn = document.getElementById('cardToggle');
-        const clickSound = document.getElementById('clickSound');
+    <!-- ============================================================= -->
+    <!-- THƯ VIỆN LOCAL TỪ SOURCE MỚI (js/)                            -->
+    <!-- ============================================================= -->
+    <script src="js/three.min.js"></script>
+    <script src="js/MeshSurfaceSampler.js"></script>
+    <script src="js/TrackballControls.js"></script>
+    <script src="js/simplex-noise.js"></script>
+    <script src="js/OBJLoader.js"></script>
+    <script src="js/gsap.min.js"></script>
 
+    <!-- ============================================================= -->
+    <!-- LOGIC TOÀN TRANG (TỐI ƯU MOBILE & HIỆU ỨNG CHUYỂN TRANG)     -->
+    <!-- ============================================================= -->
+    <script>
+    (function() {
+        const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+        const mainContainer = document.getElementById('mainContainer');
+        const section1 = document.getElementById('section1');
+        const section2 = document.getElementById('section2');
+        const dot1 = document.getElementById('dot1');
+        const dot2 = document.getElementById('dot2');
+        const scrollToSection2 = document.getElementById('scrollToSection2');
+        const scrollToSection1 = document.getElementById('scrollToSection1');
+        const pageTransitionGlow = document.getElementById('pageTransitionGlow');
+        let currentSection = 1;
+        let isTransitioning = false;
+
+        // --- 1. Hiệu ứng chuyển trang Cinematic Mượt Mà ---
+        function triggerGlowFlash() {
+            pageTransitionGlow.classList.add('flash');
+            setTimeout(() => {
+                pageTransitionGlow.classList.remove('flash');
+            }, 600);
+        }
+
+        function goToSection(num) {
+            if (isTransitioning || currentSection === num) return;
+            isTransitioning = true;
+            triggerGlowFlash();
+
+            const targetSection = (num === 1) ? section1 : section2;
+            if (num === 1) {
+                section1.classList.remove('is-returning');
+                void section1.offsetWidth;
+                section1.classList.add('is-returning');
+                startAnimation2D();
+                setTimeout(() => {
+                    section1.classList.remove('is-returning');
+                }, 1150);
+            }
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Hiệu ứng bay camera Cinematic khi vào Trang 3D
+            if (num === 2 && camera3D) {
+                const targetZ = getMobileCameraZ();
+                gsap.fromTo(camera3D.position,
+                    { z: targetZ + 1.6, y: 0.72 },
+                    { z: targetZ, y: 0.58, duration: 1.3, ease: "power2.out", onUpdate: () => {
+                        if (controls3D) controls3D.update();
+                    }}
+                );
+            }
+
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 700);
+        }
+
+        scrollToSection2.addEventListener('click', () => goToSection(2));
+        scrollToSection1.addEventListener('click', () => goToSection(1));
+        dot1.addEventListener('click', () => goToSection(1));
+        dot2.addEventListener('click', () => goToSection(2));
+
+        // Nhận diện Section đang hiển thị
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                    if (entry.target.id === 'section1') {
+                        currentSection = 1;
+                        dot1.classList.add('active');
+                        dot2.classList.remove('active');
+                        start2DLoop();
+                    } else if (entry.target.id === 'section2') {
+                        currentSection = 2;
+                        dot2.classList.add('active');
+                        dot1.classList.remove('active');
+                        start3DLoop();
+                    }
+                }
+            });
+        }, { threshold: [0.5] });
+
+        observer.observe(section1);
+        observer.observe(section2);
+
+        // --- 2. Cử chỉ vuốt tay (Touch Swipe) nhạy bén trên Điện Thoại ---
+        let touchStartY = 0;
+        let touchStartX = 0;
+        let touchStartTime = 0;
+
+        window.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                touchStartY = e.touches[0].clientY;
+                touchStartX = e.touches[0].clientX;
+                touchStartTime = Date.now();
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchend', (e) => {
+            if (e.changedTouches.length === 1) {
+                const deltaY = e.changedTouches[0].clientY - touchStartY;
+                const deltaX = e.changedTouches[0].clientX - touchStartX;
+                const deltaTime = Date.now() - touchStartTime;
+
+                // Nếu vuốt dọc dứt khoát (> 60px và không phải vuốt ngang)
+                if (Math.abs(deltaY) > 60 && Math.abs(deltaY) > Math.abs(deltaX) * 1.3 && deltaTime < 650) {
+                    if (deltaY < 0 && currentSection === 1) {
+                        // Vuốt lên -> xuống section 2
+                        goToSection(2);
+                    } else if (deltaY > 0 && currentSection === 2) {
+                        // Vuốt xuống -> lên section 1
+                        goToSection(1);
+                    }
+                }
+            }
+        }, { passive: true });
+
+
+        // --- 3. Quản lý Âm Thanh (Web Audio API - Tối ưu iOS/Android) ---
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggleBtn = document.getElementById('musicToggleBtn');
+        const musicVisualizer = document.getElementById('musicVisualizer');
         let audioCtx = null;
         let gainNode = null;
+        let isAudioPlaying = false;
 
-        async function playGreetingSound() {
+        async function initAudio() {
             try {
                 if (!audioCtx) {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    const source = audioCtx.createMediaElementSource(clickSound);
+                    const source = audioCtx.createMediaElementSource(bgMusic);
                     gainNode = audioCtx.createGain();
-
                     gainNode.gain.value = 1.0;
                     source.connect(gainNode);
                     gainNode.connect(audioCtx.destination);
                 }
-
                 if (audioCtx.state === 'suspended') {
                     await audioCtx.resume();
                 }
-
-                clickSound.currentTime = 0;
-                await clickSound.play();
+                await bgMusic.play();
+                isAudioPlaying = true;
+                musicVisualizer.classList.remove('music-paused');
             } catch (err) {
-                console.warn("Autoplay was blocked; waiting for user interaction.", err);
+                console.warn("Autoplay audio waiting for touch gesture.", err);
+                musicVisualizer.classList.add('music-paused');
+                isAudioPlaying = false;
             }
         }
 
-        // Try to start the greeting as soon as the page opens. If autoplay is
-        // blocked by the browser, the first user interaction retries playback.
-        window.addEventListener('load', playGreetingSound, { once: true });
-        document.addEventListener('pointerdown', playGreetingSound, { once: true });
-        cardToggleBtn.addEventListener('click', playGreetingSound);
+        function toggleAudio() {
+            if (!audioCtx) {
+                initAudio();
+                return;
+            }
+            if (bgMusic.paused) {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                bgMusic.play();
+                isAudioPlaying = true;
+                musicVisualizer.classList.remove('music-paused');
+            } else {
+                bgMusic.pause();
+                isAudioPlaying = false;
+                musicVisualizer.classList.add('music-paused');
+            }
+        }
 
-        // Multilingual Phrase Collection matching the Python script
-        const PHRASES = [
+        musicToggleBtn.addEventListener('click', toggleAudio);
+        window.addEventListener('load', initAudio, { once: true });
+        // Kích hoạt ngay khi chạm đầu tiên trên điện thoại
+        document.addEventListener('touchstart', () => {
+            if (!isAudioPlaying) initAudio();
+        }, { once: true });
+        document.addEventListener('pointerdown', () => {
+            if (!isAudioPlaying) initAudio();
+        }, { once: true });
+
+
+        // --- 4. Nút Replay ---
+        const replayBtn = document.getElementById('replayBtn');
+        replayBtn.addEventListener('click', () => {
+            if (currentSection === 1) {
+                startAnimation2D();
+            } else {
+                reset3DView();
+            }
+        });
+
+
+        // ========================================================
+        // 5. SOURCE CŨ: 2D MATH HEART CANVAS (SECTION 1)
+        // ========================================================
+        const PHRASES_2D = [
             "Anh yêu em", "I love you", "Je t'aime", "Te amo", 
             "Seni seviyorum", "Я тебя люблю", " 사랑해", "愛してる", 
             "我爱你", "Ich liebe dich", "Ti amo", "Eu te amo", 
@@ -221,48 +569,47 @@
             "此女甚美", "祝你学业顺利，每天都开心", "你真的很厉害", "愿你所想皆如愿"
         ];
 
-        const BG_COLOR = "#060208";
-        const SIZES = [14, 15, 16, 17, 18];
-        const FONT_FAMILY = "Montserrat, sans-serif";
+        const BG_COLOR_2D = "#060208";
+        const SIZES_2D = [13, 14, 15, 16, 17];
+        const FONT_FAMILY_2D = "Montserrat, sans-serif";
 
-        const canvas = document.getElementById("heartCanvas");
-        const ctx = canvas.getContext("2d");
+        const canvas2D = document.getElementById("heartCanvas");
+        const ctx2D = canvas2D.getContext("2d");
 
-        let width, height, centerX, centerY, scale;
-        let placedPhrases = [];
-        let activeAnimations = [];
-        let mainPhrases = [];
-        let backgroundParticles = [];
-        let animationFrameId = null;
-        let isSpawning = false;
-        let mousePos = { x: -1000, y: -1000 };
+        let width2D, height2D, centerX2D, centerY2D, scale2D;
+        let placedPhrases2D = [];
+        let activeAnimations2D = [];
+        let mainPhrases2D = [];
+        let backgroundParticles2D = [];
+        let animationFrame2D = null;
+        let isSpawning2D = false;
+        let is2DRunning = false;
+        let mousePos2D = { x: -1000, y: -1000 };
 
-        // Resize Canvas & Adjust Scale
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            centerX = width / 2;
-            centerY = height / 2 - 20;
+        function resize2D() {
+            width2D = canvas2D.width = window.innerWidth;
+            height2D = canvas2D.height = window.innerHeight;
+            centerX2D = width2D / 2;
 
-            // Compute dynamic scale based on viewport size
-            const minDim = Math.min(width, height);
-            scale = (minDim / 800) * 21;
+            const isMobile = width2D < 768;
+            // Đẩy tâm trái tim 2D lên cao hơn để đuôi trái tim hoàn toàn không chạm vào dòng chữ bên dưới
+            centerY2D = height2D / 2 - (isMobile ? 100 : 90);
 
-            if (placedPhrases.length > 0) {
-                initHeartLayout();
+            // Tối ưu tỉ lệ scale trái tim 2D gọn gàng, thoáng đãng
+            const minDim = Math.min(width2D, height2D);
+            scale2D = (minDim / 800) * (isMobile ? 23.0 : 22.0);
+
+            if (placedPhrases2D.length > 0) {
+                initHeartLayout2D();
             }
         }
 
-        window.addEventListener("resize", resize);
-
-        // Mathematical Heart Equation
-        function heartPoint(a) {
+        function heartPoint2D(a) {
             const x = 16 * Math.pow(Math.sin(a), 3);
             const y = -(13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a));
-            return { x: x * scale, y: y * scale };
+            return { x: x * scale2D, y: y * scale2D };
         }
 
-        // Color Mixing Utilities
         function mixColors(c1, c2, k) {
             return [
                 c1[0] + (c2[0] - c1[0]) * k,
@@ -275,12 +622,11 @@
             return `rgba(${Math.round(c[0])}, ${Math.round(c[1])}, ${Math.round(c[2])}, ${alpha})`;
         }
 
-        // Polygon & Span Intersections for Heart Fill
-        function computeHeartSpans() {
+        function computeHeartSpans2D() {
             const POLY = [];
             const STEPS = 720;
             for (let i = 0; i < STEPS; i++) {
-                POLY.push(heartPoint((2 * Math.PI * i) / STEPS));
+                POLY.push(heartPoint2D((2 * Math.PI * i) / STEPS));
             }
 
             const EDGES = [];
@@ -324,18 +670,17 @@
             return { spans, intersect, yMax, yMin, cy: (yMax + yMin) / 2 };
         }
 
-        // Layout Phrases inside Heart Polygon
-        function initHeartLayout() {
-            placedPhrases = [];
-            const { spans, intersect, yMax, yMin, cy } = computeHeartSpans();
+        function initHeartLayout2D() {
+            placedPhrases2D = [];
+            const { spans, intersect, yMax, yMin, cy } = computeHeartSpans2D();
 
-            ctx.font = `bold 14px ${FONT_FAMILY}`;
-            const rowH = 18 * (scale / 21);
+            ctx2D.font = `bold 14px ${FONT_FAMILY_2D}`;
+            const rowH = 18 * (scale2D / 21);
             const half = rowH / 2;
 
             let phraseIdx = 0;
             const getNextPhrase = () => {
-                const phrase = PHRASES[phraseIdx % PHRASES.length];
+                const phrase = PHRASES_2D[phraseIdx % PHRASES_2D.length];
                 phraseIdx++;
                 return phrase;
             };
@@ -354,9 +699,9 @@
                         let fit = null;
                         for (let attempt = 0; attempt < 10; attempt++) {
                             const text = getNextPhrase();
-                            const size = SIZES[Math.floor(Math.random() * SIZES.length)] * (scale / 21);
-                            ctx.font = `bold ${size}px ${FONT_FAMILY}`;
-                            const w = ctx.measureText(text).width;
+                            const size = SIZES_2D[Math.floor(Math.random() * SIZES_2D.length)] * (scale2D / 21);
+                            ctx2D.font = `bold ${size}px ${FONT_FAMILY_2D}`;
+                            const w = ctx2D.measureText(text).width;
                             if (cur + w <= hi) {
                                 fit = { text, size, w };
                                 break;
@@ -379,7 +724,7 @@
 
                         line.forEach((item, i) => {
                             const edge = i === 0 || i === line.length - 1;
-                            placedPhrases.push({
+                            placedPhrases2D.push({
                                 x: item.x,
                                 y: y,
                                 text: item.text,
@@ -393,36 +738,34 @@
                 y -= rowH;
             }
 
-            // Assign Colors based on Distance from Center
             const wine = [148, 0, 23];
             const crimson = [230, 13, 36];
             const blood = [250, 26, 41];
 
-            placedPhrases.forEach(p => {
-                const rad = Math.min(1.0, Math.hypot(p.x / (16 * scale), (p.y - cy) / (14.5 * scale)));
+            placedPhrases2D.forEach(p => {
+                const rad = Math.min(1.0, Math.hypot(p.x / (16 * scale2D), (p.y - cy) / (14.5 * scale2D)));
                 let base = mixColors(wine, crimson, 0.25 + 0.75 * rad);
                 base = mixColors(base, blood, Math.random() * 0.35 + (p.edge ? 0.3 : 0));
                 p.color = base;
                 p.rad = rad;
             });
 
-            // Sort order: Edges first, then inner
-            const edges = placedPhrases.filter(p => p.edge);
-            const inner = placedPhrases.filter(p => !p.edge);
+            const edges = placedPhrases2D.filter(p => p.edge);
+            const inner = placedPhrases2D.filter(p => !p.edge);
             edges.sort((a, b) => Math.atan2(a.x, a.y - cy) - Math.atan2(b.x, b.y - cy));
             inner.sort((a, b) => -a.rad + Math.random() * 0.08);
 
-            placedPhrases = [...edges, ...inner];
+            placedPhrases2D = [...edges, ...inner];
         }
 
-        // Floating Background Hearts
-        function initBackgroundParticles() {
-            backgroundParticles = [];
-            for (let i = 0; i < 45; i++) {
-                backgroundParticles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    size: Math.random() * 12 + 4,
+        function initBackgroundParticles2D() {
+            backgroundParticles2D = [];
+            const count = window.innerWidth < 768 ? 30 : 45;
+            for (let i = 0; i < count; i++) {
+                backgroundParticles2D.push({
+                    x: Math.random() * width2D,
+                    y: Math.random() * height2D,
+                    size: Math.random() * 11 + 4,
                     speedY: - (Math.random() * 0.8 + 0.3),
                     speedX: Math.sin(Math.random() * Math.PI) * 0.4,
                     opacity: Math.random() * 0.5 + 0.1,
@@ -431,185 +774,584 @@
             }
         }
 
-        // Draw Heart Particles
-        function drawHeartShape(cx, cy, size, color, alpha) {
-            ctx.save();
-            ctx.translate(cx, cy);
-            ctx.beginPath();
-            ctx.fillStyle = color;
-            ctx.globalAlpha = alpha;
+        function drawHeartShape2D(cx, cy, size, color, alpha) {
+            ctx2D.save();
+            ctx2D.translate(cx, cy);
+            ctx2D.beginPath();
+            ctx2D.fillStyle = color;
+            ctx2D.globalAlpha = alpha;
 
             const topCurveHeight = size * 0.3;
-            ctx.moveTo(0, topCurveHeight);
-            ctx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
-            ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, size, 0, size);
-            ctx.bezierCurveTo(0, size, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
-            ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
-            ctx.closePath();
-            ctx.fill();
-            ctx.restore();
+            ctx2D.moveTo(0, topCurveHeight);
+            ctx2D.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
+            ctx2D.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, size, 0, size);
+            ctx2D.bezierCurveTo(0, size, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
+            ctx2D.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
+            ctx2D.closePath();
+            ctx2D.fill();
+            ctx2D.restore();
         }
 
-        // Animation System Management
-        let spawnIndex = 0;
-        let spawnAcc = 0;
-        const DURATION = 10;
-        const ANIM_FRAMES = 42;
-        const LIFT = 34;
+        let spawnIndex2D = 0;
+        let spawnAcc2D = 0;
+        const DURATION_2D = 9;
+        const ANIM_FRAMES_2D = 40;
+        const LIFT_2D = 32;
 
-        function startAnimation() {
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            activeAnimations = [];
-            mainPhrases = [];
-            spawnIndex = 0;
-            spawnAcc = 0;
-            isSpawning = true;
-            loop();
+        function startAnimation2D() {
+            activeAnimations2D = [];
+            mainPhrases2D = [];
+            spawnIndex2D = 0;
+            spawnAcc2D = 0;
+            isSpawning2D = true;
         }
 
-        function spawnPhrase(p) {
+        function spawnPhrase2D(p) {
             const item = {
                 ...p,
                 f: 0,
-                dx: (Math.random() - 0.5) * 20,
+                dx: (Math.random() - 0.5) * 18,
                 completed: false,
                 flash: 0
             };
-            activeAnimations.push(item);
+            activeAnimations2D.push(item);
         }
 
-        // Main Animation & Render Loop
-        function loop() {
-            ctx.fillStyle = BG_COLOR;
-            ctx.fillRect(0, 0, width, height);
+        function loop2D() {
+            if (!is2DRunning) return;
 
-            // Render Ambient Background Floating Hearts
-            backgroundParticles.forEach(pt => {
+            ctx2D.fillStyle = BG_COLOR_2D;
+            ctx2D.fillRect(0, 0, width2D, height2D);
+
+            // Floating hearts
+            backgroundParticles2D.forEach(pt => {
                 pt.y += pt.speedY;
                 pt.x += Math.sin(pt.pulse) * 0.5;
                 pt.pulse += 0.02;
 
                 if (pt.y < -20) {
-                    pt.y = height + 20;
-                    pt.x = Math.random() * width;
+                    pt.y = height2D + 20;
+                    pt.x = Math.random() * width2D;
                 }
 
-                drawHeartShape(pt.x, pt.y, pt.size, "#ff2a6d", pt.opacity);
+                drawHeartShape2D(pt.x, pt.y, pt.size, "#ff2a6d", pt.opacity);
             });
 
-            // Handle Spawning Rate
-            if (isSpawning) {
-                const rate = placedPhrases.length / (DURATION * 60);
-                spawnAcc += rate;
-                while (spawnAcc >= 1 && spawnIndex < placedPhrases.length) {
-                    spawnAcc -= 1;
-                    spawnPhrase(placedPhrases[spawnIndex]);
-                    spawnIndex++;
+            // Spawning
+            if (isSpawning2D) {
+                const rate = placedPhrases2D.length / (DURATION_2D * 60);
+                spawnAcc2D += rate;
+                while (spawnAcc2D >= 1 && spawnIndex2D < placedPhrases2D.length) {
+                    spawnAcc2D -= 1;
+                    spawnPhrase2D(placedPhrases2D[spawnIndex2D]);
+                    spawnIndex2D++;
                 }
-                if (spawnIndex >= placedPhrases.length) {
-                    isSpawning = false;
+                if (spawnIndex2D >= placedPhrases2D.length) {
+                    isSpawning2D = false;
                 }
             }
 
-            // Draw Completed Stationary Phrases
-            mainPhrases.forEach(p => {
-                ctx.font = `bold ${p.size}px ${FONT_FAMILY}`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
+            // Completed Phrases
+            mainPhrases2D.forEach(p => {
+                ctx2D.font = `bold ${p.size}px ${FONT_FAMILY_2D}`;
+                ctx2D.textAlign = "center";
+                ctx2D.textBaseline = "middle";
 
-                const screenX = centerX + p.x;
-                const screenY = centerY + p.y;
+                const screenX = centerX2D + p.x;
+                const screenY = centerY2D + p.y;
 
-                // Mouse Proximity Glow Interaction
-                const distToMouse = Math.hypot(screenX - mousePos.x, screenY - mousePos.y);
+                const distToMouse = Math.hypot(screenX - mousePos2D.x, screenY - mousePos2D.y);
                 let col = p.color;
-                let textFont = p.size;
 
-                if (distToMouse < 80) {
-                    const factor = (1 - distToMouse / 80);
+                if (distToMouse < 75) {
+                    const factor = (1 - distToMouse / 75);
                     col = mixColors(p.color, [255, 200, 200], factor * 0.8);
-                    ctx.shadowBlur = 15 * factor;
-                    ctx.shadowColor = "#ff2a6d";
+                    ctx2D.shadowBlur = 15 * factor;
+                    ctx2D.shadowColor = "#ff2a6d";
                 } else if (p.flash > 0) {
                     col = mixColors(p.color, [255, 200, 200], p.flash);
                     p.flash -= 0.03;
-                    ctx.shadowBlur = 10 * p.flash;
-                    ctx.shadowColor = "#ffffff";
+                    ctx2D.shadowBlur = 10 * p.flash;
+                    ctx2D.shadowColor = "#ffffff";
                 } else {
-                    ctx.shadowBlur = 0;
+                    ctx2D.shadowBlur = 0;
                 }
 
-                // Render Shadow
-                ctx.fillStyle = "rgba(0,0,0,0.6)";
-                ctx.fillText(p.text, screenX + 2, screenY + 2);
+                ctx2D.fillStyle = "rgba(0,0,0,0.6)";
+                ctx2D.fillText(p.text, screenX + 2, screenY + 2);
 
-                // Render Text
-                ctx.fillStyle = rgbToString(col);
-                ctx.fillText(p.text, screenX, screenY);
-                ctx.shadowBlur = 0;
+                ctx2D.fillStyle = rgbToString(col);
+                ctx2D.fillText(p.text, screenX, screenY);
+                ctx2D.shadowBlur = 0;
             });
 
-            // Draw Active Animating Phrases (Flying in)
-            for (let i = activeAnimations.length - 1; i >= 0; i--) {
-                const p = activeAnimations[i];
+            // Animating Phrases
+            for (let i = activeAnimations2D.length - 1; i >= 0; i--) {
+                const p = activeAnimations2D[i];
                 p.f += 1;
-                const u = Math.min(1.0, p.f / ANIM_FRAMES);
-                const e = 1 - Math.pow(1 - u, 3); // Ease out cubic
+                const u = Math.min(1.0, p.f / ANIM_FRAMES_2D);
+                const e = 1 - Math.pow(1 - u, 3);
 
-                const hover = (1 - e) * LIFT;
-                const px = centerX + p.x + p.dx * (1 - e);
-                const py = centerY + p.y - hover;
+                const hover = (1 - e) * LIFT_2D;
+                const px = centerX2D + p.x + p.dx * (1 - e);
+                const py = centerY2D + p.y - hover;
 
-                ctx.font = `bold ${p.size}px ${FONT_FAMILY}`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
+                ctx2D.font = `bold ${p.size}px ${FONT_FAMILY_2D}`;
+                ctx2D.textAlign = "center";
+                ctx2D.textBaseline = "middle";
 
-                // Glow Halo Effect during animation
-                ctx.shadowBlur = 12 * e;
-                ctx.shadowColor = rgbToString(p.color, e * 0.8);
+                ctx2D.shadowBlur = 12 * e;
+                ctx2D.shadowColor = rgbToString(p.color, e * 0.8);
 
-                // Flash overlay effect
                 const flashVal = 0.75 * Math.sin(Math.PI * Math.max(0, (u - 0.55) / 0.45));
                 const col = mixColors(mixColors([6, 2, 8], p.color, Math.pow(e, 1.5)), [255, 200, 200], flashVal);
 
-                ctx.fillStyle = rgbToString(col);
-                ctx.fillText(p.text, px, py);
+                ctx2D.fillStyle = rgbToString(col);
+                ctx2D.fillText(p.text, px, py);
 
                 if (u >= 1) {
-                    mainPhrases.push(p);
-                    activeAnimations.splice(i, 1);
+                    mainPhrases2D.push(p);
+                    activeAnimations2D.splice(i, 1);
                 }
             }
 
-            // Shimmer Effect after all phrases rendered
-            if (!isSpawning && activeAnimations.length === 0 && mainPhrases.length > 0) {
+            // Shimmer effect
+            if (!isSpawning2D && activeAnimations2D.length === 0 && mainPhrases2D.length > 0) {
                 if (Math.random() < 0.15) {
-                    const target = mainPhrases[Math.floor(Math.random() * mainPhrases.length)];
+                    const target = mainPhrases2D[Math.floor(Math.random() * mainPhrases2D.length)];
                     target.flash = 0.8;
                 }
             }
 
-            animationFrameId = requestAnimationFrame(loop);
+            animationFrame2D = requestAnimationFrame(loop2D);
         }
 
-        // Mouse Hover Event Listener
+        function start2DLoop() {
+            if (!is2DRunning) {
+                is2DRunning = true;
+                animationFrame2D = requestAnimationFrame(loop2D);
+            }
+        }
+
+        function stop2DLoop() {
+            is2DRunning = false;
+            if (animationFrame2D) {
+                cancelAnimationFrame(animationFrame2D);
+                animationFrame2D = null;
+            }
+        }
+
+        // Mouse & Touch Interaction cho Trang 1
         window.addEventListener("mousemove", (e) => {
-            mousePos.x = e.clientX;
-            mousePos.y = e.clientY;
+            mousePos2D.x = e.clientX;
+            mousePos2D.y = e.clientY;
+        });
+        window.addEventListener("touchmove", (e) => {
+            if (currentSection === 1 && e.touches.length > 0) {
+                mousePos2D.x = e.touches[0].clientX;
+                mousePos2D.y = e.touches[0].clientY;
+            }
+        }, { passive: true });
+        window.addEventListener("mouseleave", () => {
+            mousePos2D.x = -1000;
+            mousePos2D.y = -1000;
         });
 
-        window.addEventListener("mouseleave", () => {
-            mousePos.x = -1000;
-            mousePos.y = -1000;
-        });    
 
-        // UI Interactions & Modal Listeners
+        // ========================================================
+        // 6. SOURCE MỚI: THREE.JS 3D PARTICLES HEART (SECTION 2)
+        // ========================================================
+        const webglContainer = document.getElementById('webgl3d-container');
+        let scene3D, camera3D, renderer3D, controls3D, root3D;
+        let heartMesh = null, sampler3D = null, originHeart3D = null;
+        let positions3D = [], colors3D = [];
+        let particlesGeom3D, particlesMat3D, particles3D;
+        let simplex3D = null;
+        const tmpPos3D = new THREE.Vector3();
+        const palette3D = [
+            new THREE.Color("#ffd4ee"),
+            new THREE.Color("#ff77fc"),
+            new THREE.Color("#ff77ae"),
+            new THREE.Color("#ff1775")
+        ];
+        let spikes3D = [];
+        const beat3D = { a: 0 };
+        const maxZ = 0.23, rateZ = 0.5;
+        let ringsGroup3D = null;
+        const ringEntries3D = [];
+        let animationFrame3D = null;
+        let is3DRunning = false;
+        let lastT3D = 0;
+
+        // Tính khoảng cách Camera Z tối ưu theo tỉ lệ màn hình (đặc biệt màn hình dọc của điện thoại)
+        function getMobileCameraZ() {
+            const aspect = window.innerWidth / window.innerHeight;
+            if (aspect < 0.6) return 3.35; // Điện thoại màn hình dài (iPhone, Galaxy)
+            if (aspect < 1.0) return 3.0;  // Điện thoại màn hình rộng/máy tính bảng đứng
+            return 2.1;                    // Máy tính / màn hình ngang
+        }
+
+        class SparkPoint3D {
+            constructor() {
+                sampler3D.sample(tmpPos3D);
+                this.color = palette3D[Math.floor(Math.random() * palette3D.length)];
+                this.rand = Math.random() * 0.03;
+                this.pos = tmpPos3D.clone();
+                this.one = null;
+                this.two = null;
+            }
+            update(a) {
+                const n1 = simplex3D.noise4D(this.pos.x, this.pos.y, this.pos.z, 0.1) + 1.5;
+                const n2 = simplex3D.noise4D(this.pos.x * 500, this.pos.y * 500, this.pos.z * 500, 1) + 1;
+                this.one = this.pos.clone().multiplyScalar(1.01 + n1 * 0.15 * beat3D.a);
+                this.two = this.pos.clone().multiplyScalar(1 + n2 * 1 * (beat3D.a + 0.3) - beat3D.a * 1.2);
+            }
+        }
+
+        function initSparks3D() {
+            positions3D = [];
+            colors3D = [];
+            spikes3D.length = 0;
+            const count = window.innerWidth < 768 ? 7500 : 10000;
+            for (let i = 0; i < count; i++) {
+                spikes3D.push(new SparkPoint3D());
+            }
+        }
+
+        function makeRepeatedTextTexture(text, opts = {}) {
+            const {
+                fontFamily = 'Poppins, Montserrat, Arial, sans-serif',
+                fontWeight = 800,
+                fontSize = 72,
+                fill = '#ffffff',
+                glow = true,
+                glowBlur = 10,
+                stroke = true,
+                strokeWidth = 10,
+                letterSpacing = 10,
+                gap = 120,
+                padY = 20
+            } = opts;
+
+            const dpr = Math.min(2, window.devicePixelRatio || 1);
+            const tmp = document.createElement('canvas').getContext('2d');
+            tmp.font = `${fontWeight} ${fontSize * dpr}px ${fontFamily}`;
+            let wText = 0;
+            for (let i = 0; i < text.length; i++) {
+                wText += tmp.measureText(text[i]).width + (i < text.length - 1 ? letterSpacing * dpr : 0);
+            }
+            const unit = Math.ceil(wText + gap * dpr);
+            const W = unit;
+            const H = Math.ceil((fontSize + padY * 2) * dpr);
+
+            const cnv = document.createElement('canvas');
+            cnv.width = W;
+            cnv.height = H;
+            const ctx = cnv.getContext('2d');
+            ctx.font = `${fontWeight} ${fontSize * dpr}px ${fontFamily}`;
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'left';
+
+            const cx = Math.floor((W - wText) / 2);
+            const cy = Math.floor(H / 2);
+
+            if (glow) {
+                ctx.save();
+                ctx.shadowColor = 'rgba(255, 100, 180, 0.95)';
+                ctx.shadowBlur = glowBlur * dpr;
+                ctx.fillStyle = fill;
+                let x = cx;
+                for (let i = 0; i < text.length; i++) {
+                    ctx.fillText(text[i], x, cy);
+                    x += tmp.measureText(text[i]).width + (i < text.length - 1 ? letterSpacing * dpr : 0);
+                }
+                ctx.restore();
+            }
+
+            if (stroke) {
+                ctx.lineWidth = strokeWidth * dpr;
+                ctx.strokeStyle = 'rgba(10, 0, 15, 0.95)';
+                let x = cx;
+                for (let i = 0; i < text.length; i++) {
+                    ctx.strokeText(text[i], x, cy);
+                    x += tmp.measureText(text[i]).width + (i < text.length - 1 ? letterSpacing * dpr : 0);
+                }
+            }
+
+            ctx.fillStyle = fill;
+            let x = cx;
+            for (let i = 0; i < text.length; i++) {
+                ctx.fillText(text[i], x, cy);
+                x += tmp.measureText(text[i]).width + (i < text.length - 1 ? letterSpacing * dpr : 0);
+            }
+
+            const tex = new THREE.CanvasTexture(cnv);
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.wrapT = THREE.ClampToEdgeWrapping;
+            tex.minFilter = THREE.LinearFilter;
+            tex.magFilter = THREE.LinearFilter;
+            tex.anisotropy = renderer3D ? renderer3D.capabilities.getMaxAnisotropy() : 4;
+            tex.generateMipmaps = false;
+            tex.needsUpdate = true;
+            return tex;
+        }
+
+        function createScrollingCylinderRing(text, radius, height, scrollSpeed, repeatCount = 2, tilt = 0.10) {
+            const tex = makeRepeatedTextTexture(text, {
+                fontSize: 84,
+                letterSpacing: 12,
+                gap: 140,
+                glowBlur: 10,
+                strokeWidth: 8
+            });
+
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.wrapT = THREE.ClampToEdgeWrapping;
+            tex.repeat.set(repeatCount, 1);
+            tex.offset.set(0, 0);
+
+            const material = new THREE.MeshBasicMaterial({
+                map: tex,
+                transparent: true,
+                side: THREE.DoubleSide,
+                depthWrite: false
+            });
+
+            const radialSeg = window.innerWidth < 768 ? 256 : 512;
+            const geo = new THREE.CylinderGeometry(radius, radius, height, radialSeg, 1, true);
+            const mesh = new THREE.Mesh(geo, material);
+            mesh.rotation.x = tilt;
+
+            ringsGroup3D.add(mesh);
+            ringEntries3D.push({ mesh, material, scrollSpeed });
+        }
+
+        function buildTextRings3D() {
+            const text1 = "Chúc cục zèn ngày 20.10 luôn xinh đẹp và vui vẻ  ";
+            const text2 = "Ngập tràn niềm vui - Hạnh phúc - Bình an  ";
+            const text3 = "Yêu thương - 20/10  ";
+
+            createScrollingCylinderRing(text1, 0.95, 0.12, 0.00, 2, 0.13);
+            createScrollingCylinderRing(text2, 0.72, 0.10, 0.00, 2, 0.10);
+            createScrollingCylinderRing(text3, 0.50, 0.08, 0.00, 2, 0.08);
+        }
+
+        function createProceduralHeartGeometry() {
+            const geom = new THREE.BufferGeometry();
+            const positions = [];
+            const uSteps = 70;
+            const vSteps = 70;
+
+            for (let i = 0; i < uSteps; i++) {
+                const u0 = (-Math.PI) + (2 * Math.PI * i) / uSteps;
+                const u1 = (-Math.PI) + (2 * Math.PI * (i + 1)) / uSteps;
+                for (let j = 0; j < vSteps; j++) {
+                    const v0 = (-Math.PI) + (2 * Math.PI * j) / vSteps;
+                    const v1 = (-Math.PI) + (2 * Math.PI * (j + 1)) / vSteps;
+
+                    const getPt = (u, v) => {
+                        const sinU = Math.sin(u);
+                        const cosU = Math.cos(u);
+                        const sinV = Math.sin(v);
+                        const cosV = Math.cos(v);
+                        const x = 16 * Math.pow(sinU, 3) * Math.sin(v);
+                        const y = (13 * cosU - 5 * Math.cos(2*u) - 2 * Math.cos(3*u) - Math.cos(4*u)) * Math.sin(v);
+                        const z = 6 * cosV * Math.sin(u);
+                        return [x * 0.04, y * 0.04, z * 0.04];
+                    };
+
+                    const p00 = getPt(u0, v0);
+                    const p10 = getPt(u1, v0);
+                    const p01 = getPt(u0, v1);
+                    const p11 = getPt(u1, v1);
+
+                    positions.push(...p00, ...p10, ...p01);
+                    positions.push(...p10, ...p11, ...p01);
+                }
+            }
+            geom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+            geom.computeVertexNormals();
+            return geom;
+        }
+
+        function setupHeartMesh(geometry) {
+            heartMesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: new THREE.Color("rgb(0,0,0)") }));
+            root3D.add(heartMesh);
+            originHeart3D = Array.from(heartMesh.geometry.attributes.position.array);
+            sampler3D = new THREE.MeshSurfaceSampler(heartMesh).build();
+            initSparks3D();
+            buildTextRings3D();
+            if (currentSection === 2) {
+                start3DLoop();
+            }
+        }
+
+        function initThree3D() {
+            scene3D = new THREE.Scene();
+            camera3D = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            const startZ = getMobileCameraZ();
+            camera3D.position.set(0, 0.42, startZ);
+
+            renderer3D = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer3D.setClearColor(0x000000, 0);
+            renderer3D.setSize(window.innerWidth, window.innerHeight);
+            renderer3D.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+            webglContainer.appendChild(renderer3D.domElement);
+
+            controls3D = new THREE.TrackballControls(camera3D, renderer3D.domElement);
+            controls3D.noPan = true;
+            controls3D.noZoom = true; // Cho phép cuộn trang mượt mà
+            controls3D.target.set(0, 0.58, 0);
+            controls3D.rotateSpeed = window.innerWidth < 768 ? 2.5 : 2.0;
+
+            root3D = new THREE.Group();
+            root3D.position.set(0, 1, 0);
+            root3D.scale.set(1.12, 1.12, 1.12);
+            scene3D.add(root3D);
+
+            particlesGeom3D = new THREE.BufferGeometry();
+            particlesMat3D = new THREE.PointsMaterial({ vertexColors: true, size: window.innerWidth < 768 ? 0.010 : 0.009 });
+            particles3D = new THREE.Points(particlesGeom3D, particlesMat3D);
+            root3D.add(particles3D);
+
+            simplex3D = new SimplexNoise();
+
+            // GSAP Heartbeat Animation
+            gsap.timeline({ repeat: -1, repeatDelay: 0.3 })
+                .to(beat3D, { a: 0.5, duration: 0.6, ease: "power2.in" })
+                .to(beat3D, { a: 0.0, duration: 0.6, ease: "power3.out" });
+
+            ringsGroup3D = new THREE.Group();
+            ringsGroup3D.position.set(0, -0.55, 0);
+            root3D.add(ringsGroup3D);
+
+            const objLoader = new THREE.OBJLoader();
+            const onObjSuccess = (obj) => {
+                const heart = obj.children[0];
+                heart.geometry.rotateX(-Math.PI * 0.5);
+                heart.geometry.scale(0.04, 0.04, 0.04);
+                heart.geometry.translate(0, -0.4, 0);
+                setupHeartMesh(heart.geometry);
+            };
+
+            objLoader.load(
+                'heart.obj',
+                onObjSuccess,
+                undefined,
+                () => {
+                    console.warn("Thử nạp CDN...");
+                    objLoader.load(
+                        'https://assets.codepen.io/127738/heart_2.obj',
+                        onObjSuccess,
+                        undefined,
+                        () => {
+                            const procGeom = createProceduralHeartGeometry();
+                            procGeom.translate(0, -0.15, 0);
+                            setupHeartMesh(procGeom);
+                        }
+                    );
+                }
+            );
+        }
+
+        function render3D(ms) {
+            if (!is3DRunning) return;
+            const t = ms * 0.001;
+            const dt = lastT3D ? (t - lastT3D) : 0.016;
+            lastT3D = t;
+
+            if (spikes3D.length > 0) {
+                positions3D.length = 0;
+                colors3D.length = 0;
+                for (let i = 0; i < spikes3D.length; i++) {
+                    const g = spikes3D[i];
+                    g.update(t);
+                    const rand = g.rand, color = g.color;
+                    if (maxZ * rateZ + rand > g.one.z && g.one.z > -maxZ * rateZ - rand) {
+                        positions3D.push(g.one.x, g.one.y, g.one.z);
+                        colors3D.push(color.r, color.g, color.b);
+                    }
+                    if (maxZ * rateZ + rand * 2 > g.one.z && g.one.z > -maxZ * rateZ - rand * 2) {
+                        positions3D.push(g.two.x, g.two.y, g.two.z);
+                        colors3D.push(color.r, color.g, color.b);
+                    }
+                }
+                particlesGeom3D.setAttribute("position", new THREE.BufferAttribute(new Float32Array(positions3D), 3));
+                particlesGeom3D.setAttribute("color", new THREE.BufferAttribute(new Float32Array(colors3D), 3));
+            }
+
+            if (heartMesh && originHeart3D && simplex3D) {
+                const vs = heartMesh.geometry.attributes.position.array;
+                for (let i = 0; i < vs.length; i += 3) {
+                    const v = new THREE.Vector3(originHeart3D[i], originHeart3D[i+1], originHeart3D[i+2]);
+                    const n = simplex3D.noise4D(originHeart3D[i] * 1.5, originHeart3D[i+1] * 1.5, originHeart3D[i+2] * 1.5, t * 0.0005) + 1;
+                    v.multiplyScalar(n * 0.15 * beat3D.a);
+                    vs[i] = v.x;
+                    vs[i+1] = v.y;
+                    vs[i+2] = v.z;
+                }
+                heartMesh.geometry.attributes.position.needsUpdate = true;
+            }
+
+            for (const r of ringEntries3D) {
+                if (r.scrollSpeed !== 0) {
+                    r.material.map.offset.x = (r.material.map.offset.x + r.scrollSpeed * dt) % 1;
+                }
+            }
+            if (ringsGroup3D) {
+                ringsGroup3D.rotation.y -= 0.18 * dt;
+            }
+
+            if (controls3D) controls3D.update();
+            if (renderer3D && scene3D && camera3D) {
+                renderer3D.render(scene3D, camera3D);
+            }
+
+            animationFrame3D = requestAnimationFrame(render3D);
+        }
+
+        function start3DLoop() {
+            if (!is3DRunning) {
+                is3DRunning = true;
+                lastT3D = 0;
+                animationFrame3D = requestAnimationFrame(render3D);
+            }
+        }
+
+        function stop3DLoop() {
+            is3DRunning = false;
+            if (animationFrame3D) {
+                cancelAnimationFrame(animationFrame3D);
+                animationFrame3D = null;
+            }
+        }
+
+        function reset3DView() {
+            if (camera3D) {
+                const targetZ = getMobileCameraZ();
+                gsap.to(camera3D.position, {
+                    x: 0, y: 0.42, z: targetZ,
+                    duration: 1.2,
+                    ease: "power2.out",
+                    onUpdate: () => {
+                        if (controls3D) controls3D.update();
+                    }
+                });
+            }
+            if (ringsGroup3D) {
+                gsap.to(ringsGroup3D.rotation, { y: 0, duration: 1.2, ease: "power2.out" });
+            }
+        }
+
+
+        // ========================================================
+        // 7. MODAL THIỆP CHÚC MỪNG
+        // ========================================================
         const modal = document.getElementById("greetingModal");
         const cardToggle = document.getElementById("cardToggle");
         const closeModal = document.getElementById("closeModal");
         const closeModalBtn = document.getElementById("closeModalBtn");
-        const replayBtn = document.getElementById("replayBtn");
-        const musicToggle = document.getElementById("musicToggle");
 
         function openModal() {
             modal.classList.remove("hidden");
@@ -628,18 +1370,37 @@
         cardToggle.addEventListener("click", openModal);
         closeModal.addEventListener("click", hideModal);
         closeModalBtn.addEventListener("click", hideModal);
-        replayBtn.addEventListener("click", () => {
-            startAnimation();
+
+
+        // ========================================================
+        // 8. TỐI ƯU RESIZE TRÊN MOBILE & DESKTOP
+        // ========================================================
+        window.addEventListener("resize", () => {
+            resize2D();
+            if (camera3D && renderer3D) {
+                camera3D.aspect = window.innerWidth / window.innerHeight;
+                camera3D.position.y = 0.42;
+                camera3D.position.z = getMobileCameraZ();
+                if (controls3D) controls3D.target.set(0, 0.58, 0);
+                camera3D.updateProjectionMatrix();
+                renderer3D.setSize(window.innerWidth, window.innerHeight);
+            }
         });
 
-        // App Initialization Sequence
-        window.onload = () => {
-            resize();
-            initHeartLayout();
-            initBackgroundParticles();
-            startAnimation();
-        };
 
+        // ========================================================
+        // 9. KHỞI TẠO TỔNG THỂ
+        // ========================================================
+        window.addEventListener("DOMContentLoaded", () => {
+            resize2D();
+            initHeartLayout2D();
+            initBackgroundParticles2D();
+            startAnimation2D();
+            start2DLoop();
+            initThree3D();
+        });
+
+    })();
     </script>
 </body>
 </html>
